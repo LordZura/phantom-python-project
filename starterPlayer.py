@@ -1,4 +1,5 @@
 import random
+import playerStats
 
 
 def startingCharacter(player_class):
@@ -24,10 +25,16 @@ def startingCharacter(player_class):
     else: 
         raise ValueError(f"Unknown class {player_class}")
 
-    return {
+    stats = {
         "strength": strength,
         "swordskills": swordskills,
         "aim": aim,
         "stamina": stamina,
         "scouting": scouting
+    }
+
+    playerStats.setStats(stats)
+
+    return {
+        
     }

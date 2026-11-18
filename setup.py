@@ -1,23 +1,37 @@
 from random import choices
+import os
+import playerStats
 
-
-def startGame():
+def introduce():
     print("Welcome to The Wolrd Beyond")
-    print("Please Select Your Class:")
-    print("1. Swordsman")
-    print("2. Archer")
-    print("3. Horseman")
-    global classChoice
+    print("Press any key to continue.")
     choice = input("> ")
-    if choice == "1" or "Swordsman" or "swordsman":
-        classChoice = "swordsman"
-        return "swordsman"
-    elif choice == "2" or "Archer" or "archer":
-        classChoice = "archer"
-        return "archer"
-    elif choice == "3" or "Horseman" or "horseman":
-        classChoice = "horseman"
-        return "horseman"
-def startGame2(stats):
-    print(f"You have chosen {classChoice}, your stats are:")
-    print(f"Strength: {stats['strength']}")
+    
+def startGame():
+    while True:
+        os.system("clear")
+        print("Please Select Your Class:")
+        print("1. Swordsman")
+        print("2. Archer")
+        print("3. Horseman")
+        global classChoice
+        choice = input("> ")
+        if choice == "1":
+            classChoice = "swordsman"
+            return "swordsman"
+        elif choice == "2":
+            classChoice = "archer"
+            return "archer"
+        elif choice == "3":
+            classChoice = "horseman"
+            return "horseman"
+        else: 
+            print(f"Invalid class {choice}, please try again")
+def startGame2():
+    os.system("clear")
+    print(f"You have chosen '{classChoice}', your stats are:")
+    print(f"Strength: {playerStats.stats['strength']}")
+    print(f"Swordfight Skills: {playerStats.stats['swordskills']}")
+    print(f"Aim: {playerStats.stats['aim']}")
+    print(f"Stamina: {playerStats.stats['stamina']}")
+    print(f"Scouting: {playerStats.stats['scouting']}")
