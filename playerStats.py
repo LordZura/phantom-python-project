@@ -1,3 +1,4 @@
+day = "1"
 
 def setStats(statsValue):
     global stats
@@ -5,3 +6,4 @@ def setStats(statsValue):
 
 def getStats(statsValue):
     return stats[statsValue]
+

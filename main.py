@@ -3,8 +3,9 @@ import setup
 
 def main():
     setup.introduce()
-    chosenClass = setup.startGame()
-    stats = starterPlayer.startingCharacter(chosenClass)
-    setup.startGame2()
+    setup.startGame()
+    setup.showStats()
+    setup.turn()
+
 if __name__ == "__main__":
     main()

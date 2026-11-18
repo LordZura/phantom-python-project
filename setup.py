@@ -1,6 +1,8 @@
 from random import choices
 import os
 import playerStats
+import travel
+import starterPlayer
 
 def introduce():
     print("Welcome to The Wolrd Beyond")
@@ -18,16 +20,20 @@ def startGame():
         choice = input("> ")
         if choice == "1":
             classChoice = "swordsman"
+            starterPlayer.startingCharacter(classChoice)
             return "swordsman"
         elif choice == "2":
             classChoice = "archer"
+            starterPlayer.startingCharacter(classChoice)
             return "archer"
         elif choice == "3":
             classChoice = "horseman"
+            starterPlayer.startingCharacter(classChoice)
             return "horseman"
         else: 
             print(f"Invalid class {choice}, please try again")
-def startGame2():
+
+def showStats():
     os.system("clear")
     print(f"You have chosen '{classChoice}', your stats are:")
     print(f"Strength: {playerStats.stats['strength']}")
@@ -35,3 +41,15 @@ def startGame2():
     print(f"Aim: {playerStats.stats['aim']}")
     print(f"Stamina: {playerStats.stats['stamina']}")
     print(f"Scouting: {playerStats.stats['scouting']}")
+    print("Press anything to continue.")
+    choice = input("> ")
+    
+def turn():
+    print(f"Day {playerStats.day}, What is your action?")
+    print("1. Travel")
+    print("2. Train")
+    print("3. Check Inventory")
+    choice = input("> ")
+
+    if choice == "1":
+        travel.travel()

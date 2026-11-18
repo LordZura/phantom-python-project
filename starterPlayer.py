@@ -34,7 +34,3 @@ def startingCharacter(player_class):
     }
 
     playerStats.setStats(stats)
-
-    return {
-        
-    }
