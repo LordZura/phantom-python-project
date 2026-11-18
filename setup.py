@@ -45,6 +45,7 @@ def showStats():
     choice = input("> ")
     
 def turn():
+    os.system("clear")
     print(f"Day {playerStats.day}, What is your action?")
     print("1. Travel")
     print("2. Train")
@@ -52,4 +53,4 @@ def turn():
     choice = input("> ")
 
     if choice == "1":
-        travel.travel()
+        travel.Starttravel()

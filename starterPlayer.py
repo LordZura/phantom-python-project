@@ -22,6 +22,17 @@ def startingCharacter(player_class):
         aim = random.randint(2,5)
         stamina = random.randint(30,50)
         scouting = random.randint(5,10)
+        maxEndurance = random.randint(40,50)
+        playerStats.mount = {
+            "regularHorse": {
+                "maxSpeed": random.randint(10, 14),
+                "maxEndurance": maxEndurance,
+                "endurance": maxEndurance,
+                "recoverStrength": random.randint(35, 45),
+                "maxHealth": random.randint(50, 60)
+            },
+        }
+        playerStats.equippedMount = "regularHorse"
     else: 
         raise ValueError(f"Unknown class {player_class}")
 
