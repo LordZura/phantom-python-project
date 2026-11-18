@@ -21,6 +21,8 @@ def startingCharacter(player_class):
         aim = random.randint(2,5)
         stamina = random.randint(30,50)
         scouting = random.randint(5,10)
+    else: 
+        raise ValueError(f"Unknown class {player_class}")
 
     return {
         "strength": strength,

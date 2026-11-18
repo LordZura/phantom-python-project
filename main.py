@@ -1,12 +1,9 @@
 import starterPlayer
+import setup
 
 def main():
-
-    chosenClass = "swordsman"
+    chosenClass = setup.startGame()
     stats = starterPlayer.startingCharacter(chosenClass)
-
-    print(f"Strength: {stats['strength']}")
-    print(f"Aim: {stats['aim']}")
-
+    setup.startGame2(stats)
 if __name__ == "__main__":
     main()
