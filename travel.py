@@ -165,6 +165,7 @@ def travelOnFoot(scouting, total_distance):
                 break
 
         if remaining > 0:
+            encounter()
             input("\nPress enter to continue next 10 days of walking...")
             
 

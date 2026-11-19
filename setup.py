@@ -58,3 +58,5 @@ def turn():
 
 def lost():
     print("You have lost... yeah, you died. Game over.")
+    input("Press enter to quit the game.")
+    exit()
