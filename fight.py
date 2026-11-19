@@ -3,6 +3,15 @@ import playerStats
 import random
 
 def battle(player, enemy, enemyLevel):
+    weaponDamage = 0
+    armorDefense = 0
+    for weapon in playerStats.equippedWeapon.values():
+        weaponDamage += weapon['damage']
+
+    for armorSlot in playerStats.equippedArmor.values():
+        for armor in armorSlot.values():
+            armorDefense += armor['defense']
+
     print(f"You are fighting {enemy}, with {len(playerStats.party['soldiers'])} men.")
 
     totalPartyHealth = playerStats.party['player']['health']
@@ -45,16 +54,21 @@ def battle(player, enemy, enemyLevel):
 
             if not aliveMen:
                 break
-
             target = random.choice(aliveMen)
-            target['health'] = max(0, target['health'] - enemyMan['attack'])
+            damage = enemyMan['attack']
+
+            if target is playerStats.party['player']:
+                damage = max(0, damage - armorDefense)
+
+            target['health'] = max(0, target['health'] - damage)
 
         # Player attacks
         aliveEnemies = [enemyMan for enemyMan in enemyMen if enemyMan['health'] > 0]
 
         if playerStats.party['player']['health'] > 0 and aliveEnemies:
             target = random.choice(aliveEnemies)
-            target['health'] = max(0, target['health'] - playerStats.stats['strength'])
+            playerDamage = playerStats.stats['strength'] + weaponDamage
+            target['health'] = max(0, target['health'] - playerDamage)
 
         # Soldiers attack
         for soldier in playerStats.party['soldiers'].values():

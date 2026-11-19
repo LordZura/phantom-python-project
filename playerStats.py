@@ -18,11 +18,37 @@ party = {
 }
 equippedMount = 0
 
-equipptedArmor = {
-    "helmet": "none",
-    "chestplate": "none",
-    "leggings": "none",
-    "boots": "none"
+equippedArmor = {
+    "helmet": {
+        "none": {
+            "durability": 0,
+            "defense": 0
+        }
+    },
+    "chestplate": {
+        "none": {
+            "durability": 0,
+            "defense": 0
+        }
+    },
+    "leggings": {
+        "none": {
+            "durability": 0,
+            "defense": 0
+        }
+    },
+    "boots": {
+        "none": {
+            "durability": 0,
+            "defense": 0
+        }
+    }
+}
+
+equippedWeapon = {
+    "none":{
+        "damage": 0
+    }
 }
 
 
