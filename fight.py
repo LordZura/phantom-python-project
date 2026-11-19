@@ -5,10 +5,6 @@ import random
 def battle(player, enemy, enemyLevel):
     print(f"You are fighting {enemy}, with {len(playerStats.party['soldiers'])} men.")
 
-    totalEnemyDamage = 0
-    totalPlayerDamage = 0
-    totalSoldiersDamage = 0
-    totalEnemyHealth = enemy * 100
     totalPartyHealth = playerStats.party['player']['health']
     index = 0
 
@@ -17,39 +13,72 @@ def battle(player, enemy, enemyLevel):
         *playerStats.party['soldiers'].values()
     ]
 
+    enemyMen = []
+
+    for i in range(enemy):
+        enemyMen.append({
+            "health": 100,
+            "attack": random.randint(3,5) * enemyLevel
+        })
+
     while True:
+        print(f"\nBattle round {index + 1}")
+
         if index < 1:
             print("The fight is about to begin...")
-            input("Press enter to see results...")
         else:
-            print(f"You have finished first fight, your current health is {playerStats.party['player']['health']}, your men are {len(playerStats.party['soldiers'])}")
-            input("Press enter to see results of the upcoming fight...")
+            print(f"Your current health: {playerStats.party['player']['health']}")
+            print(f"Your men: {len(playerStats.party['soldiers'])}")
+
+        input("Press enter to see results...")
 
         index += 1
 
-        for i in range(1, enemy + 1):
+        # Enemy attacks
+        for enemyMan in enemyMen:
+            if enemyMan['health'] <= 0:
+                continue
+
             aliveMen = [man for man in partyMen if man['health'] > 0]
 
             if not aliveMen:
                 break
 
             target = random.choice(aliveMen)
-            enemyDamage = random.randint(3,5) * enemyLevel
-            target['health'] = max(0, target['health'] - enemyDamage)
+            target['health'] = max(0, target['health'] - enemyMan['attack'])
 
+        # Player attacks
+        aliveEnemies = [enemyMan for enemyMan in enemyMen if enemyMan['health'] > 0]
+
+        if playerStats.party['player']['health'] > 0 and aliveEnemies:
+            target = random.choice(aliveEnemies)
+            target['health'] = max(0, target['health'] - playerStats.stats['strength'])
+
+        # Soldiers attack
         for soldier in playerStats.party['soldiers'].values():
-            totalSoldiersDamage += soldier['attack']
+            if soldier['health'] <= 0:
+                continue
 
-        totalPlayerDamage = playerStats.stats["strength"]
+            aliveEnemies = [enemyMan for enemyMan in enemyMen if enemyMan['health'] > 0]
 
-        totalAttackDamage = totalPlayerDamage + totalSoldiersDamage
-        totalEnemyHealth -= totalAttackDamage
+            if not aliveEnemies:
+                break
 
+            target = random.choice(aliveEnemies)
+            target['health'] = max(0, target['health'] - soldier['attack'])
+
+        # Calculate remaining health and enemies
         totalPartyHealth = sum(man['health'] for man in partyMen)
 
+        enemiesLeft = len([enemyMan for enemyMan in enemyMen if enemyMan['health'] > 0])
+
+        print(f"\nEnemies remaining: {enemiesLeft}/{enemy}")
+        print(f"Your party's remaining health: {totalPartyHealth}")
+
         if totalPartyHealth <= 0:
+            print("Your party has been defeated!")
             return 'lost'
-        elif totalEnemyHealth <= 0:
+
+        elif enemiesLeft <= 0:
+            print("You have defeated all enemies!")
             return 'won'
-        else:
-            continue
