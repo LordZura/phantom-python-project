@@ -26,9 +26,11 @@ def battle(player, enemy, enemyLevel):
 
         if index < 1:
             print("The fight is about to begin...")
+            print(f"You are about to fight with {len(playerStats.party['soldiers']) + 1} men")
+            print(f"Your parties total health: {totalPartyHealth}")
         else:
             print(f"Your current health: {playerStats.party['player']['health']}")
-            print(f"Your men: {len(playerStats.party['soldiers'])}")
+            print(f"Your men: {len(playerStats.party['soldiers']) + 1}")
 
         input("Press enter to see results...")
 
@@ -71,8 +73,10 @@ def battle(player, enemy, enemyLevel):
         totalPartyHealth = sum(man['health'] for man in partyMen)
 
         enemiesLeft = len([enemyMan for enemyMan in enemyMen if enemyMan['health'] > 0])
+        totalEnemyHealth = sum(enemyMan['health'] for enemyMan in enemyMen)
 
         print(f"\nEnemies remaining: {enemiesLeft}/{enemy}")
+        print(f"Total enemy health is: {totalEnemyHealth}")
         print(f"Your party's remaining health: {totalPartyHealth}")
 
         if totalPartyHealth <= 0:

@@ -119,7 +119,7 @@ def travel(horse, total_distance):
         daysChunk = 0
 
 
-        if remaining > 0 and daysChunk < 10:
+        while remaining > 0 and daysChunk < 10:
             day += 1
             daysChunk += 1
             playerStats.day = int(playerStats.day) + 1
@@ -153,7 +153,7 @@ def travelOnFoot(scouting, total_distance):
         daysChunk = 0
 
         while remaining > 0 and daysChunk < 10:
-            day += 1
+            day += 1    
             daysChunk += 1
             playerStats.day = int(playerStats.day) + 1
 
