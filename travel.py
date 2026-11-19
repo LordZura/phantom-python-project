@@ -4,6 +4,8 @@ import starterPlayer
 import worldData
 import os
 from math import dist
+import random
+import fight
 
 def Starttravel():
     countries = list(worldData.world.keys())
@@ -28,7 +30,6 @@ def Starttravel():
             break
         else:
             print("Invalid choice!")
-
     settlements = worldData.world[chosen_country]
 
     while True:
@@ -134,7 +135,8 @@ def travel(horse, total_distance):
             if remaining <= 0:
                 break
         if remaining > 0:
-            input("\nPress anything to continue the next 10 days of travel...")
+            encounter()
+            input("\nPress enter to continue the next 10 days of travel...")
 
     print(f"\nArrived in {day} days!") 
     input("Press anything to continue...")
@@ -163,7 +165,24 @@ def travelOnFoot(scouting, total_distance):
                 break
 
         if remaining > 0:
-            input("Press any key to continue next 10 days of walking...")
+            input("\nPress enter to continue next 10 days of walking...")
+            
 
     print(f"\nArrived on foot in {day} days!")
     input("Press any key to continue...")
+
+
+def encounter():
+    chance = random.randint(1, 100) + (playerStats.stats['scouting'])
+    if chance <= 30:
+        print("You have been ambushed!")
+        enemy = random.randint(3, 10)
+        enemyLevel = random.randint(1, 5)
+        outcome = fight.battle(0, enemy, enemyLevel)
+        if outcome == 'lost':
+            setup.lost()
+        elif outcome == 'won':
+            gold = random.randint(100, 300)
+            print(f"You have won the encounter! You recieved: {gold}")
+            input("Press enter to continue your journey...")
+    

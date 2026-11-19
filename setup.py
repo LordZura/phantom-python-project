@@ -54,3 +54,7 @@ def turn():
 
     if choice == "1":
         travel.Starttravel()
+
+
+def lost():
+    print("You have lost... yeah, you died. Game over.")
