@@ -77,6 +77,12 @@ def Starttravel():
             else:
                 horseStats = playerStats.mount[playerStats.equippedMount]
                 travel(horseStats, calcuated_distance)
+
+            playerStats.playerPosition['country'] = chosen_country
+            playerStats.playerPosition['settlement'] = chosen_settlement
+
+            print(f"Welcome to {chosen_settlement}, in {chosen_country}")
+            setup.turn()
             break
         elif choice == "2":
             setup.turn()
@@ -109,17 +115,29 @@ def travel(horse, total_distance):
     day = 0
 
     while remaining > 0:
-        day += 1
+        daysChunk = 0
 
-        if horse["endurance"] > 0:
-            distance, hours = travelDay(horse, remaining)
-            remaining -= distance
-            print(f"Day {day}: traveled {distance}km ({hours:.1f}h), {remaining}km left")
-        else:
-            restDay(horse)
-            print(f"Day {day}: resting, endurance now {horse['endurance']}")
 
-    print(f"\nArrived in {day} days!")
+        if remaining > 0 and daysChunk < 10:
+            day += 1
+            daysChunk += 1
+            playerStats.day = int(playerStats.day) + 1
+
+            if horse["endurance"] > 0:
+                distance, hours = travelDay(horse, remaining)
+                remaining -= distance
+                print(f"Day {day}: traveled {distance}km ({hours:.1f}h), {remaining}km left")
+            else:
+                restDay(horse)
+                print(f"Day {day}: resting, endurance now {horse['endurance']}")
+
+            if remaining <= 0:
+                break
+        if remaining > 0:
+            input("\nPress anything to continue the next 10 days of travel...")
+
+    print(f"\nArrived in {day} days!") 
+    input("Press anything to continue...")
 
 
 def travelOnFoot(scouting, total_distance):
@@ -130,9 +148,22 @@ def travelOnFoot(scouting, total_distance):
     day = 0
 
     while remaining > 0:
-        day += 1
-        todaysDistance = min(remaining, kmDay)
-        remaining -= todaysDistance
-        print(f"Day {day}: walked {todaysDistance}km, {remaining}km left")
+        daysChunk = 0
+
+        while remaining > 0 and daysChunk < 10:
+            day += 1
+            daysChunk += 1
+            playerStats.day = int(playerStats.day) + 1
+
+            todaysDistance = min(remaining, kmDay)
+            remaining -= todaysDistance
+            print(f"Day {day}: walked {todaysDistance}km, {remaining}km left")
+
+            if remaining <= 0:
+                break
+
+        if remaining > 0:
+            input("Press any key to continue next 10 days of walking...")
 
     print(f"\nArrived on foot in {day} days!")
+    input("Press any key to continue...")

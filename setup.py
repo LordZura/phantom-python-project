@@ -5,7 +5,7 @@ import travel
 import starterPlayer
 
 def introduce():
-    print("Welcome to The Wolrd Beyond")
+    print("Welcome to The Wolrd Beyond`")
     print("Press any key to continue.")
     choice = input("> ")
     
@@ -46,7 +46,7 @@ def showStats():
     
 def turn():
     os.system("clear")
-    print(f"Day {playerStats.day}, What is your action?")
+    print(f"Day {playerStats.day}, Location {playerStats.playerPosition['settlement']} in {playerStats.playerPosition['country']} What is your action?")
     print("1. Travel")
     print("2. Train")
     print("3. Check Inventory")
