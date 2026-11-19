@@ -12,7 +12,7 @@ def battle(player, enemy, enemyLevel):
         for armor in armorSlot.values():
             armorDefense += armor['defense']
 
-    print(f"You are fighting {enemy}, with {len(playerStats.party['soldiers'])} men.")
+    print(f"You are fighting {enemy}, with {len(playerStats.party['soldiers']) + 1} men.")
 
     totalPartyHealth = playerStats.party['player']['health']
     index = 0

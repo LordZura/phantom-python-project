@@ -14,6 +14,7 @@ party = {
         "health": 100
     },
     "soldiers":{
+        
     }
 }
 equippedMount = 0
