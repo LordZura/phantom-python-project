@@ -5,6 +5,9 @@ import random
 def battle(player, enemy, enemyLevel):
     weaponDamage = 0
     armorDefense = 0
+    playerKills = 0
+    playerDamageDealt = 0
+
     for weapon in playerStats.equippedWeapon.values():
         weaponDamage += weapon['damage']
 
@@ -68,7 +71,13 @@ def battle(player, enemy, enemyLevel):
         if playerStats.party['player']['health'] > 0 and aliveEnemies:
             target = random.choice(aliveEnemies)
             playerDamage = playerStats.stats['strength'] + weaponDamage
-            target['health'] = max(0, target['health'] - playerDamage)
+            damageDone = min(playerDamage, target['health'])
+            target['health'] -= damageDone
+
+            playerDamageDealt += damageDone
+
+            if target['health'] <= damageDone:
+                playerKills += 1
 
         # Soldiers attack
         for soldier in playerStats.party['soldiers'].values():
@@ -99,4 +108,9 @@ def battle(player, enemy, enemyLevel):
 
         elif enemiesLeft <= 0:
             print("You have defeated all enemies!")
+
+            earnedExperience = int(playerDamageDealt // 10) + (playerKills * 5)
+            playerStats.giveXp(earnedExperience)
+            print(f"You have earned {earnedExperience} XP!")
+
             return 'won'

@@ -16,7 +16,35 @@ party = {
         "health": 100
     },
     "soldiers":{
-        
+        "soldier1":{
+            "health": 100,
+            "attack": 10
+        },
+        "soldier2":{
+            "health": 100,
+            "attack": 10
+        },
+        "soldier3":{
+            "health": 100,
+            "attack": 10
+        },
+        "soldier4":{
+            "health": 100,
+            "attack": 10
+        },
+        "soldier5":{
+            "health": 100,
+            "attack": 10
+        },
+        "soldier6":{
+            "health": 100,
+            "attack": 10
+        },
+        "soldier7":{
+            "health": 100,
+            "attack": 10
+        },
+
     }
 }
 equippedMount = 0
@@ -81,3 +109,17 @@ def displayStats():
     print(f"Skill points: {playerSkills}")
     print("")
     input("Press enter to conitnue")
+
+def giveXp(amount):
+    global playerExperience, playerLevel, playerNextLevelup, playerSkills
+
+    playerExperience += amount
+
+    while playerExperience >= playerNextLevelup:
+        playerExperience -= playerNextLevelup
+        playerLevel += 1
+        playerSkills += 1
+        playerNextLevelup += 25
+
+        print(f"You have leveled up! You are now {playerLevel}")
+        print("You have gained 1 skill point")

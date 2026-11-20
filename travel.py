@@ -184,6 +184,6 @@ def encounter():
             setup.lost()
         elif outcome == 'won':
             gold = random.randint(100, 300)
-            print(f"You have won the encounter! You recieved: {gold} gold")
+            print(f"You recieved: {gold} gold")
             input("Press enter to continue your journey...")
     
