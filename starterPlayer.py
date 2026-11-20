@@ -43,5 +43,6 @@ def startingCharacter(player_class):
         "stamina": stamina,
         "scouting": scouting
     }
-
+    
     playerStats.setStats(stats)
+    playerStats.playerStamina = playerStats.stats['stamina']

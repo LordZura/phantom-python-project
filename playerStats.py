@@ -1,3 +1,5 @@
+import os
+
 day = "1"
 playerPosition = {
     "country": "Vaeloria",
@@ -18,6 +20,11 @@ party = {
     }
 }
 equippedMount = 0
+
+playerExperience = 0
+playerLevel = 1
+playerNextLevelup = 20
+playerSkills = 0
 
 equippedArmor = {
     "helmet": {
@@ -52,6 +59,8 @@ equippedWeapon = {
     }
 }
 
+playerStamina = 0
+
 
 def setStats(statsValue):
     global stats
@@ -59,3 +68,16 @@ def setStats(statsValue):
 
 def getStats(statsValue):
     return stats[statsValue]
+
+def displayStats():
+    os.system("clear")
+    print("Your full stats:")
+    print("")
+    print("Physical stats:")
+    for stat, value in stats.items():
+        print(f"- {stat.capitalize()}: {value}")
+    
+    print("Other:")
+    print(f"Skill points: {playerSkills}")
+    print("")
+    input("Press enter to conitnue")
