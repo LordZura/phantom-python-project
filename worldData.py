@@ -1,3 +1,5 @@
+import random
+
 
 world = {
     "Vaeloria": {
@@ -56,3 +58,86 @@ world = {
         "Winterhold": (600, 920)
     }
 }
+
+market = {
+    "Vaeloria": {
+        "budget": 0,
+        "products": {
+
+        }
+    },
+
+    "Dravenn": {
+        "budget": 0,
+        "products": {
+            
+        }
+    },
+
+    "Elarune": {
+        "budget": 0,
+        "products": {
+            
+        }
+    },
+
+    "Kharvoss": {
+        "budget": 0,
+        "products": {
+            
+        }
+    },
+
+    "Myrthalen": {
+        "budget": 0,
+        "products": {
+            
+        }
+    },
+
+    "Solmere": {
+        "budget": 0,
+        "products": {
+            
+        }
+    },
+
+    "Odravia": {
+        "budget": 0,
+        "products": {
+            
+        }
+    }
+}
+
+avilableProducts = {
+    "salt":{
+        "count": (100,500),
+        "cost": (2,5)
+    },
+    "wood":{
+        "count": (50,150),
+        "cost": (5,15)
+    },
+    "iron":{
+        "count": (10,150),
+        "cost": (35,120)
+    },
+    "food":{
+        "count": (200,800),
+        "cost": (3,10)
+    },
+}
+
+
+def setupMarket():
+    for country in market.values():
+        country['budget'] = random.randint(5000, 15000)
+        country['products'] = {}
+
+        for product, info in avilableProducts.items():
+            if random.random() < 0.75:
+                country["products"][product] = {
+                    "count": random.randint(*info["count"]),
+                    "cost": random.randint(*info["cost"])
+                }

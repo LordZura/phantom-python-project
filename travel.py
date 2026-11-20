@@ -6,7 +6,7 @@ import os
 from math import dist
 import random
 import fight
-
+import traven
 
 def Starttravel():
     countries = list(worldData.world.keys())
@@ -138,7 +138,7 @@ def travel(horse, total_distance):
         while remaining > 0 and daysChunk < 10:
             day += 1
             daysChunk += 1
-            playerStats.day = int(playerStats.day) + 1
+            playerStats.advanceDay()
 
             if horse["endurance"] > 0:
                 distance, hours = travelDay(horse, remaining)

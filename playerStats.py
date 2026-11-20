@@ -1,6 +1,6 @@
 import os
 
-day = "1"
+day = 1
 playerPosition = {
     "country": "Vaeloria",
     "settlement": "Asterfall"
@@ -123,3 +123,13 @@ def giveXp(amount):
 
         print(f"You have leveled up! You are now {playerLevel}")
         print("You have gained 1 skill point")
+
+
+
+def advanceDay():
+    global day
+    day += 1
+
+    if day % 100 == 0:
+        import worldData
+        worldData.setupMarket()
