@@ -7,61 +7,77 @@ from math import dist
 import random
 import fight
 
+
 def Starttravel():
     countries = list(worldData.world.keys())
 
-    while True:
-        os.system("clear")
-        print("Choose a country:")
+    while True:  # Go back to country selection
 
-        for number, country in enumerate(countries, start=1):
-            print(f"{number}. {country}")
+        while True:
+            os.system("clear")
+            print("Choose a country:")
 
-        choice = input("> ")
+            for number, country in enumerate(countries, start=1):
+                print(f"{number}. {country}")
 
-        if not choice.isdigit():
-            print("Please enter a number!")
+            choice = input("> ")
+
+            if not choice.isdigit():
+                print("Please enter a number!")
+                continue
+
+            choice = int(choice)
+
+            if 1 <= choice <= len(countries):
+                chosen_country = countries[choice - 1]
+                break
+            else:
+                print("Invalid choice!")
+
+        settlements = worldData.world[chosen_country]
+
+        current_position = worldData.world[
+            playerStats.playerPosition["country"]
+        ][playerStats.playerPosition["settlement"]]
+
+        chosen_settlement = None
+
+        while True:
+            os.system("clear")
+            print("Choose a settlement:")
+
+            settlement_names = list(settlements.keys())
+
+            for number, settlement in enumerate(settlement_names, start=1):
+                distance = dist(current_position, settlements[settlement])
+                print(f"{number}. {settlement} - {distance:.1f}km")
+
+            print(f"{len(settlements) + 1}. Back <-")
+
+            choice = input("> ")
+
+            if not choice.isdigit():
+                print("Please enter a number!")
+                continue
+
+            choice = int(choice)
+
+            if 1 <= choice <= len(settlements):
+                chosen_settlement = settlement_names[choice - 1]
+                break
+            elif chosen_settlement is None:
+                break
+            else:
+                print("Invalid choice!")
+
+        if chosen_settlement is None:
             continue
 
-        choice = int(choice)
-
-        if 1 <= choice <= len(countries):
-            chosen_country = countries[choice - 1]
-            break
-        else:
-            print("Invalid choice!")
-    settlements = worldData.world[chosen_country]
-
-    while True:
-        os.system("clear")
-        print("Choose a settlement:")
-        settlement_names = list(settlements.keys())
-        for number, settlement in enumerate(settlement_names, start=1):
-            print(f"{number}. {settlement}")
-
-        choice = input("> ")
-
-        if not choice.isdigit():
-            print("Please enter a number!")
-            continue
-
-        choice = int(choice)
-        
-
-        if 1 <= choice <= len(settlements):
-            chosen_settlement = settlement_names[choice - 1]
-            break
-        else:
-            print("Invalid choice!")
-
-    
-    current_position = worldData.world[
-        playerStats.playerPosition["country"]
-    ][playerStats.playerPosition["settlement"]]
+        break
 
     destination = worldData.world[chosen_country][chosen_settlement]
-
     calcuated_distance = dist(current_position, destination)
+
 
     while True:
 
