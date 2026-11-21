@@ -19,6 +19,8 @@ def Starttravel():
 
             for number, country in enumerate(countries, start=1):
                 print(f"{number}. {country}")
+            
+            print(f"{len(countries) + 1}. back <-")
 
             choice = input("> ")
 
@@ -31,6 +33,8 @@ def Starttravel():
             if 1 <= choice <= len(countries):
                 chosen_country = countries[choice - 1]
                 break
+            elif choice == len(countries) + 1:
+                return
             else:
                 print("Invalid choice!")
 
@@ -65,8 +69,8 @@ def Starttravel():
             if 1 <= choice <= len(settlements):
                 chosen_settlement = settlement_names[choice - 1]
                 break
-            elif chosen_settlement is None:
-                break
+            elif choice == len(settlements) + 1:
+                return
             else:
                 print("Invalid choice!")
 

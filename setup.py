@@ -62,6 +62,8 @@ def turn():
             travel.Starttravel()
         elif choice == "2":
             train.start()
+        elif choice == "3":
+            playerStats.checkInventory()
         elif choice == "4":
             playerStats.displayStats()
         elif choice == "5":

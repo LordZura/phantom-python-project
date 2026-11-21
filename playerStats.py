@@ -3,7 +3,11 @@ import os
 
 day = 1
 gold = 500
-inventory = {}
+inventory = {
+    "salt": 10,
+    "food": 5,
+    "stuff": 100
+}
 
 playerPosition = {
     "country": "Vaeloria",
@@ -142,3 +146,8 @@ def advanceDay():
     if day % 100 == 0:
         import worldData
         worldData.setupMarket()
+
+def checkInventory():
+    for item, amount in inventory.items():
+        print(f"{item}: {amount}")
+    input("> ")
