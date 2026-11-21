@@ -8,6 +8,7 @@ def main():
     setup.startGame()
     setup.showStats()
     worldData.setupMarket()
+    worldData.setupRecruits()
     setup.turn()
 
 if __name__ == "__main__":

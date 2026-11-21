@@ -109,6 +109,50 @@ market = {
         }
     }
 }
+recruits = {
+    "Vaeloria": {
+        "products": {
+
+        }
+    },
+
+    "Dravenn": {
+        "products": {
+            
+        }
+    },
+
+    "Elarune": {
+        "products": {
+            
+        }
+    },
+
+    "Kharvoss": {
+        "products": {
+            
+        }
+    },
+
+    "Myrthalen": {
+        "products": {
+            
+        }
+    },
+
+    "Solmere": {
+        "products": {
+            
+        }
+    },
+
+    "Odravia": {
+        "products": {
+            
+        }
+    }
+}
+
 
 avilableProducts = {
     "salt":{
@@ -129,6 +173,40 @@ avilableProducts = {
     },
 }
 
+avilableRecruits = {
+    "rookie swordsman":{
+        "count": (5,10),
+        "cost": (50,60),
+        "level": 1,
+        "class": "melee"
+    },
+    "experienced swordsman":{
+        "count": (3,8),
+        "cost": (110,130),
+        "level": 2,
+        "class": "melee"
+    },
+    "elite swordsman":{
+        "count": (1,4),
+        "cost": (200,250),
+        "level": 3,
+        "class": "melee"
+    },
+    "archer":{
+        "count": (4,9),
+        "cost": (60,70),
+        "level": 1,
+        "class": "archer"
+    },
+    "elite archer":{
+        "count": (1,3),
+        "cost": (250,260),
+        "level": 3,
+        "class": "archer"
+    },
+    
+}
+
 
 def setupMarket():
     for country in market.values():
@@ -140,4 +218,17 @@ def setupMarket():
                 country["products"][product] = {
                     "count": random.randint(*info["count"]),
                     "cost": random.randint(*info["cost"])
+                }
+
+def setupRecruits():
+    for country in recruits.values():
+        country['products'] = {}
+
+        for product, info, in avilableRecruits.items():
+            if random.random() < 0.75:
+                country["products"][product] = {
+                    "count": random.randint(*info["count"]),
+                    "cost": random.randint(*info["cost"]),
+                    "level": info['level'],
+                    "class": info['class']
                 }

@@ -27,33 +27,10 @@ party = {
     },
     "soldiers": {
         "soldier1": {
+            "class": "melee",
             "health": 100,
             "attack": 10
-        },
-        "soldier2": {
-            "health": 100,
-            "attack": 10
-        },
-        "soldier3": {
-            "health": 100,
-            "attack": 10
-        },
-        "soldier4": {
-            "health": 100,
-            "attack": 10
-        },
-        "soldier5": {
-            "health": 100,
-            "attack": 10
-        },
-        "soldier6": {
-            "health": 100,
-            "attack": 10
-        },
-        "soldier7": {
-            "health": 100,
-            "attack": 10
-        },
+        }
     }
 }
 
@@ -93,6 +70,7 @@ equippedArmor = {
 
 equippedWeapon = {
     "none": {
+        "type": "sword",
         "damage": 0
     }
 }
