@@ -5,6 +5,7 @@ import travel
 import starterPlayer
 import train
 import traven
+import tournament
 
 def introduce():
     print("Welcome to The Wolrd Beyond`")
@@ -55,7 +56,8 @@ def turn():
         print("3. Check Inventory")
         print("4. Check Stats")
         print("5. Traven")
-        print("6. Exit the game. (for now nothing is saved :D)")
+        print("6. Enter Tournament")
+        print("7. Exit the game. (for now nothing is saved :D)")
         choice = input("> ")
 
         if choice == "1":
@@ -69,6 +71,8 @@ def turn():
         elif choice == "5":
             traven.openTraven()
         elif choice == "6":
+            tournament.enter()
+        elif choice == "7":
             exit()
 
 
