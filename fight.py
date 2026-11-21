@@ -152,6 +152,21 @@ def battle(player, enemy, enemyLevel):
 
             target['health'] = max(0, target['health'] - soldier['attack'])
 
+        survivingSoldiers = {}
+
+        for name, soldier in playerStats.party['soldiers'].items():
+            if soldier['health'] > 0:
+                survivingSoldiers[name] = soldier
+
+        playerStats.party['soldiers'] = survivingSoldiers
+
+        partyMen = []
+
+        partyMen.append(playerStats.party['player'])
+
+        for soldier in playerStats.party['soldiers'].values():
+            partyMen.append(soldier)
+
         totalPartyHealth = sum(man['health'] for man in partyMen)
 
         enemiesLeft = 0
@@ -165,6 +180,7 @@ def battle(player, enemy, enemyLevel):
         print(f"\nEnemies remaining: {enemiesLeft}/{enemy}")
         print(f"Total enemy health is: {totalEnemyHealth}")
         print(f"Your party's remaining health: {totalPartyHealth}")
+        print(f"Your surviving soldiers: {len(playerStats.party['soldiers'])}")
 
         if totalPartyHealth <= 0:
             print("Your party has been defeated!")
