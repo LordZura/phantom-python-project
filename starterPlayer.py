@@ -13,7 +13,7 @@ def startingCharacter(player_class):
         playerStats.equippedWeapon = {
             "regularSword":{
                 "type": "sword",
-                "damage": "5"
+                "damage": 5
             }
         }
     elif(player_class == "archer"):
@@ -25,7 +25,7 @@ def startingCharacter(player_class):
         playerStats.equippedWeapon = {
             "regularBow":{
                 "type": "bow",
-                "damage": "3"
+                "damage": 3
             }
         }
     elif(player_class == "horseman"):
@@ -38,7 +38,7 @@ def startingCharacter(player_class):
         playerStats.equippedWeapon = {
             "regularSword": {
                 "type": "sword",
-                "damage": "5"
+                "damage": 5
             }
         }
         playerStats.mount = {
