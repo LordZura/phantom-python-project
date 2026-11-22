@@ -12,7 +12,7 @@ def startingCharacter(player_class):
         scouting = random.randint(5,10)
         maxHealth = random.randint(95,110)
         playerStats.equippedWeapon = {
-            "regularSword":{
+            "regular sword": {
                 "type": "sword",
                 "damage": 5
             }
@@ -25,9 +25,9 @@ def startingCharacter(player_class):
         scouting = random.randint(5,10)
         maxHealth = random.randint(90,100)
         playerStats.equippedWeapon = {
-            "regularBow":{
+            "hunting bow": {
                 "type": "bow",
-                "damage": 3
+                "damage": 6
             }
         }
     elif(player_class == "horseman"):
@@ -39,7 +39,7 @@ def startingCharacter(player_class):
         maxEndurance = random.randint(70,80)
         maxHealth = random.randint(95,105)
         playerStats.equippedWeapon = {
-            "regularSword": {
+            "regular sword": {
                 "type": "sword",
                 "damage": 5
             }

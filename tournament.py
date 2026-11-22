@@ -182,7 +182,7 @@ def win():
 
 def prize():
     os.system('clear')
-    reward = 500
+    reward = 5000
     playerStats.gold += reward
 
     print(f"\nYou have received {reward} gold!")

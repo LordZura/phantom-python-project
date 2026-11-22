@@ -53,7 +53,7 @@ def turn():
         print(f"Day {playerStats.day}, Location {playerStats.playerPosition['settlement']} in {playerStats.playerPosition['country']} What is your action?")
         print("1. Travel")
         print("2. Train")
-        print("3. Check Inventory")
+        print("3. Inventory")
         print("4. Check Stats")
         print("5. Traven")
         print("6. Enter Tournament")
@@ -65,7 +65,7 @@ def turn():
         elif choice == "2":
             train.start()
         elif choice == "3":
-            playerStats.checkInventory()
+            playerStats.inventoryMenu()
         elif choice == "4":
             playerStats.displayStats()
         elif choice == "5":
