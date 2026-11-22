@@ -8,7 +8,8 @@ def openTraven():
         print("\nYou entered the market. What do you want to do?")
         print("1. Market")
         print("2. Recruits")
-        print("3. Leave")
+        print("3. Sell items")
+        print("4. Leave")
 
         choice = input("> ")
 
@@ -19,6 +20,9 @@ def openTraven():
             reqruit()
 
         elif choice == "3":
+            sellItems()
+
+        elif choice == "4":
             return
 
         else:
@@ -112,6 +116,108 @@ def openMarket():
         playerStats.inventory[selectedProduct] += amount
 
         print(f"\nSuccessfully bought {amount} {selectedProduct}!")
+        print(f"Remaining gold: {playerStats.gold}")
+
+        input("\nPress enter to continue...")
+
+
+def sellItems():
+    country = playerStats.playerPosition["country"]
+    countryMarket = worldData.market[country]
+    products = countryMarket["products"]
+
+    while True:
+        print(f"\n========== Sell Items in {country} ==========")
+        print(f"Your gold: {playerStats.gold} gold")
+        print(f"Market budget: {countryMarket['budget']} gold\n")
+
+        itemNames = []
+
+        for item, amount in playerStats.inventory.items():
+            if amount > 0 and item in products:
+                itemNames.append(item)
+
+        if not itemNames:
+            print("You don't have any items this market is buying.")
+            input("Press enter to go back...")
+            return
+
+        for number, item in enumerate(itemNames, start=1):
+            info = products[item]
+            sellPrice = max(1, info["cost"] // 2)
+            print(f"{number}. {item.capitalize()}")
+            print(f"   You have: {playerStats.inventory[item]}")
+            print(f"   Sell price: {sellPrice} gold each")
+
+        print("\n0. Go back")
+        print("\nChoose an item to sell:")
+
+        choice = input("> ")
+
+        if choice == "0":
+            return
+
+        if not choice.isdigit():
+            print("Please enter a number!")
+            continue
+
+        choice = int(choice)
+
+        if choice < 1 or choice > len(itemNames):
+            print("Invalid choice!")
+            continue
+
+        selectedItem = itemNames[choice - 1]
+        info = products[selectedItem]
+        sellPrice = max(1, info["cost"] // 2)
+        maxAmount = min(playerStats.inventory[selectedItem], countryMarket["budget"] // sellPrice)
+
+        if maxAmount <= 0:
+            print("The market doesn't have enough gold to buy your items.")
+            input("Press enter to continue...")
+            continue
+
+        print(f"\nHow many {selectedItem} do you want to sell?")
+        print(f"You can sell up to {maxAmount}.")
+        amount = input("> ")
+
+        if not amount.isdigit():
+            print("Please enter a valid amount!")
+            continue
+
+        amount = int(amount)
+
+        if amount <= 0:
+            print("You must sell at least 1.")
+            continue
+
+        if amount > playerStats.inventory[selectedItem]:
+            print("You don't have that many!")
+            continue
+
+        if amount > maxAmount:
+            print("The market doesn't have enough gold for that many.")
+            continue
+
+        totalGold = amount * sellPrice
+
+        print(f"\nItem: {selectedItem.capitalize()}")
+        print(f"Amount: {amount}")
+        print(f"Total payment: {totalGold} gold")
+
+        confirm = input("Confirm sale? (y/n): ").lower()
+
+        if confirm not in ("y", "yes"):
+            print("Sale cancelled.")
+            continue
+
+        playerStats.inventory[selectedItem] -= amount
+        playerStats.gold += totalGold
+        countryMarket["budget"] -= totalGold
+        info["count"] += amount
+
+        print(f"\nSuccessfully sold {amount} {selectedItem}!")
+        print(f"You received {totalGold} gold.")
         print(f"Remaining gold: {playerStats.gold}")
 
         input("\nPress enter to continue...")
