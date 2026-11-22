@@ -9,7 +9,7 @@ update: i jus now added weapons and armor, and improved fights in enounters. yey
 this game was inspired by... nothing really. i just thought i could make one, seems simple enough, and yes it is simple.
 
 ## how to run
-how to play it... its just an .exe file. so you can jus double click it :D
+theres an .exe file, at this location: 'dist/TextBasedRPG'
 
 ## note
 this is a text based game, which was very ambitious at first, and it seems like its not yet finished, but it is so far a demo. i will improve it later on. so you can test this version out to get the feeling of what it can be.
