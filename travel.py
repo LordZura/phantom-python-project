@@ -130,6 +130,10 @@ def restDay(horse):
     if horse["endurance"] > horse["maxEndurance"]:
         horse["endurance"] = horse["maxEndurance"]
 
+    playerStats.playerStamina += 15
+    if playerStats.playerStamina > playerStats.stats["stamina"]:
+        playerStats.playerStamina = playerStats.stats["stamina"]
+
     
 def travel(horse, total_distance):
     remaining = total_distance
@@ -144,13 +148,18 @@ def travel(horse, total_distance):
             daysChunk += 1
             playerStats.advanceDay()
 
-            if horse["endurance"] > 0:
+            if horse["endurance"] > 0 and playerStats.playerStamina > 0:
                 distance, hours = travelDay(horse, remaining)
                 remaining -= distance
+                playerStats.playerStamina -= 10
+                if playerStats.playerStamina < 0:
+                    playerStats.playerStamina = 0
                 print(f"Day {day}: traveled {distance}km ({hours:.1f}h), {remaining}km left")
+                print(f"Your stamina: {playerStats.playerStamina}/{playerStats.stats['stamina']}")
             else:
                 restDay(horse)
-                print(f"Day {day}: resting, endurance now {horse['endurance']}")
+                print(f"Day {day}: resting, horse endurance now {horse['endurance']}")
+                print(f"Your stamina: {playerStats.playerStamina}/{playerStats.stats['stamina']}")
 
             if remaining <= 0:
                 break
