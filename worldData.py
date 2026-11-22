@@ -155,22 +155,121 @@ recruits = {
 
 
 avilableProducts = {
-    "salt":{
-        "count": (100,500),
-        "cost": (2,5)
+    "salt": {
+        "count": (100, 500),
+        "cost": (2, 5)
     },
-    "wood":{
-        "count": (50,150),
-        "cost": (5,15)
+    "wood": {
+        "count": (50, 150),
+        "cost": (5, 15)
     },
-    "iron":{
-        "count": (10,150),
-        "cost": (35,120)
+    "iron": {
+        "count": (10, 150),
+        "cost": (35, 120)
     },
-    "food":{
-        "count": (200,800),
-        "cost": (3,10)
+    "food": {
+        "count": (200, 800),
+        "cost": (3, 10)
     },
+    "regular sword": {
+        "count": (2, 6),
+        "cost": (45, 65),
+        "type": "weapon",
+        "weaponType": "sword",
+        "damage": 5
+    },
+    "long sword": {
+        "count": (1, 4),
+        "cost": (90, 120),
+        "type": "weapon",
+        "weaponType": "sword",
+        "damage": 9
+    },
+    "hunting bow": {
+        "count": (2, 5),
+        "cost": (50, 75),
+        "type": "weapon",
+        "weaponType": "bow",
+        "damage": 6
+    },
+    "war bow": {
+        "count": (1, 3),
+        "cost": (100, 140),
+        "type": "weapon",
+        "weaponType": "bow",
+        "damage": 10
+    },
+    "iron axe": {
+        "count": (1, 4),
+        "cost": (65, 90),
+        "type": "weapon",
+        "weaponType": "axe",
+        "damage": 8
+    },
+    "leather helmet": {
+        "count": (2, 5),
+        "cost": (25, 40),
+        "type": "armor",
+        "slot": "helmet",
+        "defense": 2,
+        "durability": 100
+    },
+    "iron helmet": {
+        "count": (1, 3),
+        "cost": (65, 90),
+        "type": "armor",
+        "slot": "helmet",
+        "defense": 5,
+        "durability": 150
+    },
+    "leather chestplate": {
+        "count": (2, 5),
+        "cost": (45, 65),
+        "type": "armor",
+        "slot": "chestplate",
+        "defense": 4,
+        "durability": 120
+    },
+    "iron chestplate": {
+        "count": (1, 3),
+        "cost": (110, 145),
+        "type": "armor",
+        "slot": "chestplate",
+        "defense": 9,
+        "durability": 180
+    },
+    "leather leggings": {
+        "count": (2, 5),
+        "cost": (30, 45),
+        "type": "armor",
+        "slot": "leggings",
+        "defense": 3,
+        "durability": 100
+    },
+    "iron leggings": {
+        "count": (1, 3),
+        "cost": (75, 100),
+        "type": "armor",
+        "slot": "leggings",
+        "defense": 6,
+        "durability": 150
+    },
+    "leather boots": {
+        "count": (2, 5),
+        "cost": (20, 35),
+        "type": "armor",
+        "slot": "boots",
+        "defense": 2,
+        "durability": 90
+    },
+    "iron boots": {
+        "count": (1, 3),
+        "cost": (55, 75),
+        "type": "armor",
+        "slot": "boots",
+        "defense": 4,
+        "durability": 130
+    }
 }
 
 avilableRecruits = {
@@ -219,6 +318,10 @@ def setupMarket():
                     "count": random.randint(*info["count"]),
                     "cost": random.randint(*info["cost"])
                 }
+
+                for stat, value in info.items():
+                    if stat not in ("count", "cost"):
+                        country["products"][product][stat] = value
 
 def setupRecruits():
     for country in recruits.values():

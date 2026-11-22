@@ -53,6 +53,14 @@ def openMarket():
             print(f"   Stock: {info['count']}")
             print(f"   Price: {info['cost']} gold each")
 
+            if info.get("type") == "weapon":
+                print(f"   Weapon type: {info['weaponType']}")
+                print(f"   Damage: {info['damage']}")
+            elif info.get("type") == "armor":
+                print(f"   Armor slot: {info['slot']}")
+                print(f"   Defense: {info['defense']}")
+                print(f"   Durability: {info['durability']}")
+
         print("\n0. Go back")
         print("\nChoose a product:")
 

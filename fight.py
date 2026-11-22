@@ -1,19 +1,93 @@
 import playerStats
 import random
+import worldData
+
+
+def getArmorPieces(armor):
+    armorPieces = []
+
+    for armorSlot in armor.values():
+        if not isinstance(armorSlot, dict):
+            continue
+
+        if 'defense' in armorSlot:
+            armorPieces.append(armorSlot)
+        else:
+            for armor in armorSlot.values():
+                if isinstance(armor, dict) and 'defense' in armor:
+                    armorPieces.append(armor)
+
+    return armorPieces
+
+
+def getArmorDefense(armor):
+    armorDefense = 0
+
+    for armorPiece in getArmorPieces(armor):
+        if armorPiece.get('durability', 0) > 0:
+            armorDefense += armorPiece['defense']
+
+    return armorDefense
+
+
+def damageArmor(armor, damage):
+    durabilityDamage = max(1, damage // 10)
+
+    for armorPiece in getArmorPieces(armor):
+        if armorPiece.get('durability', 0) > 0:
+            armorPiece['durability'] = max(0, armorPiece['durability'] - durabilityDamage)
+
+
+def createEnemyArmor(enemyLevel):
+    enemyArmor = {}
+    armorSlots = ["helmet", "chestplate", "leggings", "boots"]
+
+    for slot in armorSlots:
+        armorChance = min(75, 10 + (enemyLevel * 12))
+
+        if random.randint(1, 100) <= armorChance:
+            availableArmor = []
+
+            for item, info in worldData.avilableProducts.items():
+                if info.get('type') == "armor" and info.get('slot') == slot:
+                    availableArmor.append((item, info))
+
+            if availableArmor:
+                item, info = random.choice(availableArmor)
+
+                enemyArmor[slot] = {
+                    "name": item,
+                    "defense": info['defense'],
+                    "durability": info['durability']
+                }
+
+    return enemyArmor
+
+
+def takeDamage(target, damage, armor=None):
+    armorDefense = 0
+
+    if armor is not None:
+        armorDefense = getArmorDefense(armor)
+
+    damageTaken = max(1, damage - armorDefense)
+    oldHealth = target['health']
+    target['health'] = max(0, target['health'] - damageTaken)
+    actualDamage = oldHealth - target['health']
+
+    if armor is not None:
+        damageArmor(armor, damage)
+
+    return actualDamage
 
 
 def battle(player, enemy, enemyLevel):
     weaponDamage = 0
-    armorDefense = 0
     playerKills = 0
     playerDamageDealt = 0
 
     for weapon in playerStats.equippedWeapon.values():
         weaponDamage += weapon['damage']
-
-    for armorSlot in playerStats.equippedArmor.values():
-        for armor in armorSlot.values():
-            armorDefense += armor['defense']
 
     playerClass = "melee"
 
@@ -21,14 +95,13 @@ def battle(player, enemy, enemyLevel):
         if weapon['type'] == "bow":
             playerClass = "archer"
             break
-        elif weapon['type'] == "sword":
+        elif weapon['type'] in ("sword", "axe"):
             playerClass = "melee"
             break
 
     print(f"You are fighting {enemy}, with {len(playerStats.party['soldiers']) + 1} men.")
 
     partyMen = []
-
     partyMen.append(playerStats.party['player'])
 
     for soldier in playerStats.party['soldiers'].values():
@@ -45,8 +118,18 @@ def battle(player, enemy, enemyLevel):
         enemyMen.append({
             "health": 100,
             "attack": random.randint(3, 5) * enemyLevel,
-            "class": enemyClass
+            "class": enemyClass,
+            "armor": createEnemyArmor(enemyLevel)
         })
+
+    armoredEnemies = 0
+
+    for enemyMan in enemyMen:
+        if enemyMan['armor']:
+            armoredEnemies += 1
+
+    if armoredEnemies > 0:
+        print(f"{armoredEnemies} of the enemies are wearing armor.")
 
     while True:
         print(f"\nBattle round {index + 1}")
@@ -60,7 +143,6 @@ def battle(player, enemy, enemyLevel):
             print(f"Your men: {len(partyMen)}")
 
         input("Press enter to see results...")
-
         index += 1
 
         for enemyMan in enemyMen:
@@ -82,7 +164,6 @@ def battle(player, enemy, enemyLevel):
                 if man is playerStats.party['player']:
                     if playerClass == "melee":
                         aliveMelee.append(man)
-
                 elif man['class'] != "archer":
                     aliveMelee.append(man)
 
@@ -91,12 +172,10 @@ def battle(player, enemy, enemyLevel):
             else:
                 target = random.choice(aliveMen)
 
-            damage = enemyMan['attack']
-
             if target is playerStats.party['player']:
-                damage = max(0, damage - armorDefense)
-
-            target['health'] = max(0, target['health'] - damage)
+                takeDamage(target, enemyMan['attack'], playerStats.equippedArmor)
+            else:
+                takeDamage(target, enemyMan['attack'])
 
         aliveEnemies = []
 
@@ -117,9 +196,7 @@ def battle(player, enemy, enemyLevel):
             target = random.choice(aliveEnemies)
 
             playerDamage = playerStats.stats['strength'] + weaponDamage
-            damageDone = min(playerDamage, target['health'])
-
-            target['health'] -= damageDone
+            damageDone = takeDamage(target, playerDamage, target['armor'])
 
             playerDamageDealt += damageDone
 
@@ -149,8 +226,7 @@ def battle(player, enemy, enemyLevel):
                 break
 
             target = random.choice(aliveEnemies)
-
-            target['health'] = max(0, target['health'] - soldier['attack'])
+            takeDamage(target, soldier['attack'], target['armor'])
 
         survivingSoldiers = {}
 
@@ -161,7 +237,6 @@ def battle(player, enemy, enemyLevel):
         playerStats.party['soldiers'] = survivingSoldiers
 
         partyMen = []
-
         partyMen.append(playerStats.party['player'])
 
         for soldier in playerStats.party['soldiers'].values():
