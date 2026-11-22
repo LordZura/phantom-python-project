@@ -1,9 +1,11 @@
 
 import random
+import os
 import playerStats
 
 
 def enter():
+    os.system('clear')
     print("You are about to enter the tournament")
     print("You will face 9 great warriors")
     print("Do you want to enter the tournament?")
@@ -25,13 +27,15 @@ def enter():
 def battle(opponents):
     currentEnemy = 0
     assignedHealth = playerStats.stats['maxHealth']
+    os.system("clear")
 
     while currentEnemy < len(opponents) and assignedHealth > 0:
 
         enemyHealth = opponents[currentEnemy]['health']
         enemyAttack = opponents[currentEnemy]['attack']
         enemySwordskills = opponents[currentEnemy]['swordskills']
-    
+        assignedHealth = playerStats.stats['maxHealth']
+
         print("\nYou are facing your opponent...")
 
         while enemyHealth > 0 and assignedHealth > 0:
@@ -47,6 +51,7 @@ def battle(opponents):
         currentEnemy += 1
 
         if currentEnemy < len(opponents):
+            os.system('clear')
             print("You are now facing your next opponent...")
             input("Press enter to continue...")
 
@@ -72,6 +77,7 @@ def generateWarriors():
 
 
 def attackTurn(enemyHealth, enemyAttack, enemySwordskills, assignedHealth):
+    os.system("clear")
     print("\nChoose your strategy:")
     print("1. Charge without thinking")
     print("2. Be defensive")
@@ -91,6 +97,7 @@ def attackTurn(enemyHealth, enemyAttack, enemySwordskills, assignedHealth):
 
 
 def charge(enemyHealth, enemyAttack, enemySwordskills, assignedHealth):
+    os.system("clear")
     weaponDamage = next(iter(playerStats.equippedWeapon.values()))["damage"]
 
     playerDamage = playerStats.stats['strength'] + weaponDamage
@@ -114,6 +121,7 @@ def charge(enemyHealth, enemyAttack, enemySwordskills, assignedHealth):
 
 
 def defensive(enemyHealth, enemyAttack, enemySwordskills, assignedHealth):
+    os.system('clear')
     weaponDamage = next(iter(playerStats.equippedWeapon.values()))["damage"]
 
     playerDamage = playerStats.stats['strength'] + weaponDamage // 2
@@ -137,6 +145,7 @@ def defensive(enemyHealth, enemyAttack, enemySwordskills, assignedHealth):
 
 
 def offensive(enemyHealth, enemyAttack, enemySwordskills, assignedHealth):
+    os.system('clear')
     weaponDamage = next(iter(playerStats.equippedWeapon.values()))["damage"]
 
     playerDamage = playerStats.stats['strength'] + weaponDamage + 10
@@ -160,16 +169,19 @@ def offensive(enemyHealth, enemyAttack, enemySwordskills, assignedHealth):
 
 
 def lose():
+    os.system('clear')
     print("\nYou have lost...")
     input("Press enter to exit the tournament.")
 
 
 def win():
+    os.system('clear')
     print("\nYou have beaten all 9 warriors!")
     print("You are the tournament champion!")
 
 
 def prize():
+    os.system('clear')
     reward = 500
     playerStats.gold += reward
 
